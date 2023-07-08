@@ -11,7 +11,6 @@ type LoanRepository interface {
 	Delete(loan *loan.Loan) error
 	FindByID(id uint) (*loan.Loan, error)
 	FindByCustomerID(customerID uint) (*loan.Loan, error)
-	// Add other repository methods as needed
 }
 
 type loanRepository struct {

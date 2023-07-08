@@ -3,15 +3,15 @@ package service
 import (
 	"fmt"
 
-	"github.com/daniwira/multifinance/internal/domain/transaction"
+	domaintransaction "github.com/daniwira/multifinance/internal/domain/transaction"
 	"github.com/daniwira/multifinance/internal/repository"
 )
 
 type TransactionService interface {
-	GetTransactions() ([]transaction.Transaction, error)
-	GetTransaction(id string) (*transaction.Transaction, error)
-	CreateTransaction(transaction transaction.Transaction) (*transaction.Transaction, error)
-	UpdateTransaction(transaction transaction.Transaction) (*transaction.Transaction, error)
+	GetTransactions() ([]domaintransaction.Transaction, error)
+	GetTransaction(id string) (*domaintransaction.Transaction, error)
+	CreateTransaction(transaction domaintransaction.Transaction) (*domaintransaction.Transaction, error)
+	UpdateTransaction(transaction domaintransaction.Transaction) (*domaintransaction.Transaction, error)
 	DeleteTransaction(id string) error
 }
 
@@ -25,19 +25,19 @@ func NewTransactionService(transactionRepo repository.TransactionRepository) Tra
 	}
 }
 
-func (s *transactionService) GetTransactions() ([]transaction.Transaction, error) {
+func (s *transactionService) GetTransactions() ([]domaintransaction.Transaction, error) {
 	return s.transactionRepo.GetTransactions()
 }
 
-func (s *transactionService) GetTransaction(id string) (*transaction.Transaction, error) {
+func (s *transactionService) GetTransaction(id string) (*domaintransaction.Transaction, error) {
 	return s.transactionRepo.GetTransaction(id)
 }
 
-func (s *transactionService) CreateTransaction(transaction transaction.Transaction) (*transaction.Transaction, error) {
+func (s *transactionService) CreateTransaction(transaction domaintransaction.Transaction) (*domaintransaction.Transaction, error) {
 	return s.transactionRepo.CreateTransaction(transaction)
 }
 
-func (s *transactionService) UpdateTransaction(transaction transaction.Transaction) (*transaction.Transaction, error) {
+func (s *transactionService) UpdateTransaction(transaction domaintransaction.Transaction) (*domaintransaction.Transaction, error) {
 	transactionID := fmt.Sprintf("%d", transaction.ID)
 	existingTransaction, err := s.transactionRepo.GetTransaction(transactionID)
 	if err != nil {

@@ -10,7 +10,6 @@ type TransactionDetailRepository interface {
 	Update(transaction *transactiondetail.TransactionDetail) error
 	Delete(transaction *transactiondetail.TransactionDetail) error
 	FindByID(id uint) (*transactiondetail.TransactionDetail, error)
-	// Add other repository methods as needed
 }
 
 type transactionDetailRepository struct {

@@ -3,15 +3,15 @@ package service
 import (
 	"fmt"
 
-	"github.com/daniwira/multifinance/internal/domain/limit"
+	domainlimit "github.com/daniwira/multifinance/internal/domain/limit"
 	"github.com/daniwira/multifinance/internal/repository"
 )
 
 type LimitService interface {
-	GetLimits() ([]limit.Limit, error)
-	GetLimit(id string) (*limit.Limit, error)
-	CreateLimit(limit limit.Limit) (*limit.Limit, error)
-	UpdateLimit(limit limit.Limit) (*limit.Limit, error)
+	GetLimits() ([]domainlimit.Limit, error)
+	GetLimit(id string) (*domainlimit.Limit, error)
+	CreateLimit(limit domainlimit.Limit) (*domainlimit.Limit, error)
+	UpdateLimit(limit domainlimit.Limit) (*domainlimit.Limit, error)
 	DeleteLimit(id string) error
 }
 
@@ -25,19 +25,19 @@ func NewLimitService(limitRepo repository.LimitRepository) LimitService {
 	}
 }
 
-func (s *limitService) GetLimits() ([]limit.Limit, error) {
+func (s *limitService) GetLimits() ([]domainlimit.Limit, error) {
 	return s.limitRepo.GetLimits()
 }
 
-func (s *limitService) GetLimit(id string) (*limit.Limit, error) {
+func (s *limitService) GetLimit(id string) (*domainlimit.Limit, error) {
 	return s.limitRepo.GetLimit(id)
 }
 
-func (s *limitService) CreateLimit(limit limit.Limit) (*limit.Limit, error) {
+func (s *limitService) CreateLimit(limit domainlimit.Limit) (*domainlimit.Limit, error) {
 	return s.limitRepo.CreateLimit(limit)
 }
 
-func (s *limitService) UpdateLimit(limit limit.Limit) (*limit.Limit, error) {
+func (s *limitService) UpdateLimit(limit domainlimit.Limit) (*domainlimit.Limit, error) {
 	limitID := fmt.Sprintf("%d", limit.ID)
 	existingLimit, err := s.limitRepo.GetLimit(limitID)
 	if err != nil {

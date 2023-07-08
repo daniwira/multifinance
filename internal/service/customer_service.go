@@ -3,15 +3,16 @@ package service
 import (
 	"fmt"
 
-	"github.com/daniwira/multifinance/internal/domain/customer"
+	domaincustomer "github.com/daniwira/multifinance/internal/domain/customer"
 	"github.com/daniwira/multifinance/internal/repository"
+	"github.com/microcosm-cc/bluemonday"
 )
 
 type CustomerService interface {
-	GetCustomers() ([]customer.Customer, error)
-	GetCustomer(id string) (*customer.Customer, error)
-	CreateCustomer(customer customer.Customer) (*customer.Customer, error)
-	UpdateCustomer(customer customer.Customer) (*customer.Customer, error)
+	GetCustomers() ([]domaincustomer.Customer, error)
+	GetCustomer(id string) (*domaincustomer.Customer, error)
+	CreateCustomer(customer domaincustomer.Customer) (*domaincustomer.Customer, error)
+	UpdateCustomer(customer domaincustomer.Customer) (*domaincustomer.Customer, error)
 	DeleteCustomer(id string) error
 }
 
@@ -25,29 +26,29 @@ func NewCustomerService(customerRepo repository.CustomerRepository) CustomerServ
 	}
 }
 
-func (s *customerService) GetCustomers() ([]customer.Customer, error) {
+func (s *customerService) GetCustomers() ([]domaincustomer.Customer, error) {
 	return s.customerRepo.GetCustomers()
 }
 
-func (s *customerService) GetCustomer(id string) (*customer.Customer, error) {
+func (s *customerService) GetCustomer(id string) (*domaincustomer.Customer, error) {
 	return s.customerRepo.GetCustomer(id)
 }
 
-func (s *customerService) CreateCustomer(customer customer.Customer) (*customer.Customer, error) {
+func (s *customerService) CreateCustomer(customer domaincustomer.Customer) (*domaincustomer.Customer, error) {
 	return s.customerRepo.CreateCustomer(customer)
 }
 
-func (s *customerService) UpdateCustomer(customer customer.Customer) (*customer.Customer, error) {
+func (s *customerService) UpdateCustomer(customer domaincustomer.Customer) (*domaincustomer.Customer, error) {
 	customerID := fmt.Sprintf("%d", customer.ID)
 	existingCustomer, err := s.customerRepo.GetCustomer(customerID)
 	if err != nil {
 		return nil, err
 	}
 
+	sanitizeCustomer(&customer)
 	// Perform any necessary validation or business logic before updating
 	existingCustomer.FullName = customer.FullName
 	existingCustomer.LegalName = customer.LegalName
-	// Update other fields as needed
 
 	return s.customerRepo.UpdateCustomer(existingCustomer)
 }
@@ -59,4 +60,12 @@ func (s *customerService) DeleteCustomer(id string) error {
 	}
 
 	return s.customerRepo.DeleteCustomer(existingCustomer)
+}
+
+func sanitizeCustomer(customer *domaincustomer.Customer) {
+	p := bluemonday.UGCPolicy()
+
+	customer.FullName = p.Sanitize(customer.FullName)
+	customer.LegalName = p.Sanitize(customer.LegalName)
+
 }

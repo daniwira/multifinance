@@ -1,0 +1,31 @@
+.env
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with 'go test -c'
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go Modules
+vendor/
+.idea/
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+
+# Output files
+*.log
+*.tar.gz
+*.zip
+
+# OS-specific
+*.DS_Store
+Thumbs.db

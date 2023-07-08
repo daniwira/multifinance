@@ -7,7 +7,7 @@ import (
 	"github.com/daniwira/multifinance/internal/service"
 	"github.com/go-playground/validator/v10"
 
-	"github.com/daniwira/multifinance/internal/domain/customer"
+	domaincustomer "github.com/daniwira/multifinance/internal/domain/customer"
 	"github.com/gin-gonic/gin"
 	// "github.com/yourusername/yourappname/internal/service"
 )
@@ -45,7 +45,7 @@ func (h *CustomerHandler) GetCustomer(c *gin.Context) {
 }
 
 func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
-	var customer customer.Customer
+	var customer domaincustomer.Customer
 	err := c.BindJSON(&customer)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -72,7 +72,7 @@ func (h *CustomerHandler) CreateCustomer(c *gin.Context) {
 func (h *CustomerHandler) UpdateCustomer(c *gin.Context) {
 	id := c.Param("id")
 
-	var updatedCustomer customer.Customer
+	var updatedCustomer domaincustomer.Customer
 	err := c.BindJSON(&updatedCustomer)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

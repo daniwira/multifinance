@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/daniwira/multifinance/internal/domain/transaction"
+	domaintransaction "github.com/daniwira/multifinance/internal/domain/transaction"
 	"github.com/daniwira/multifinance/internal/service"
 	"github.com/gin-gonic/gin"
 )
@@ -42,7 +42,7 @@ func (h *TransactionHandler) GetTransaction(c *gin.Context) {
 }
 
 func (h *TransactionHandler) CreateTransaction(c *gin.Context) {
-	var transaction transaction.Transaction
+	var transaction domaintransaction.Transaction
 	err := c.BindJSON(&transaction)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -61,7 +61,7 @@ func (h *TransactionHandler) CreateTransaction(c *gin.Context) {
 func (h *TransactionHandler) UpdateTransaction(c *gin.Context) {
 	id := c.Param("id")
 
-	var updatedTransaction transaction.Transaction
+	var updatedTransaction domaintransaction.Transaction
 	err := c.BindJSON(&updatedTransaction)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -1,17 +1,17 @@
 package repository
 
 import (
-	"github.com/daniwira/multifinance/internal/domain/limit"
+	domainlimit "github.com/daniwira/multifinance/internal/domain/limit"
 	"gorm.io/gorm"
 )
 
 type LimitRepository interface {
-	GetLimits() ([]limit.Limit, error)
-	GetLimit(id string) (*limit.Limit, error)
-	CreateLimit(limit limit.Limit) (*limit.Limit, error)
-	UpdateLimit(limit *limit.Limit) (*limit.Limit, error)
-	DeleteLimit(limit *limit.Limit) error
-	FindByCustomerID(customerID uint) (*limit.Limit, error)
+	GetLimits() ([]domainlimit.Limit, error)
+	GetLimit(id string) (*domainlimit.Limit, error)
+	CreateLimit(limit domainlimit.Limit) (*domainlimit.Limit, error)
+	UpdateLimit(limit *domainlimit.Limit) (*domainlimit.Limit, error)
+	DeleteLimit(limit *domainlimit.Limit) error
+	FindByCustomerID(customerID uint) (*domainlimit.Limit, error)
 }
 
 type limitRepository struct {
@@ -24,8 +24,8 @@ func NewLimitRepository(db *gorm.DB) LimitRepository {
 	}
 }
 
-func (r *limitRepository) GetLimits() ([]limit.Limit, error) {
-	var limits []limit.Limit
+func (r *limitRepository) GetLimits() ([]domainlimit.Limit, error) {
+	var limits []domainlimit.Limit
 	result := r.db.Find(&limits)
 	if result.Error != nil {
 		return nil, result.Error
@@ -33,8 +33,8 @@ func (r *limitRepository) GetLimits() ([]limit.Limit, error) {
 	return limits, nil
 }
 
-func (r *limitRepository) GetLimit(id string) (*limit.Limit, error) {
-	var limit limit.Limit
+func (r *limitRepository) GetLimit(id string) (*domainlimit.Limit, error) {
+	var limit domainlimit.Limit
 	result := r.db.First(&limit, id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -42,7 +42,7 @@ func (r *limitRepository) GetLimit(id string) (*limit.Limit, error) {
 	return &limit, nil
 }
 
-func (r *limitRepository) CreateLimit(limit limit.Limit) (*limit.Limit, error) {
+func (r *limitRepository) CreateLimit(limit domainlimit.Limit) (*domainlimit.Limit, error) {
 	result := r.db.Create(&limit)
 	if result.Error != nil {
 		return nil, result.Error
@@ -50,7 +50,7 @@ func (r *limitRepository) CreateLimit(limit limit.Limit) (*limit.Limit, error) {
 	return &limit, nil
 }
 
-func (r *limitRepository) UpdateLimit(limit *limit.Limit) (*limit.Limit, error) {
+func (r *limitRepository) UpdateLimit(limit *domainlimit.Limit) (*domainlimit.Limit, error) {
 	result := r.db.Save(&limit)
 	if result.Error != nil {
 		return nil, result.Error
@@ -58,7 +58,7 @@ func (r *limitRepository) UpdateLimit(limit *limit.Limit) (*limit.Limit, error) 
 	return limit, nil
 }
 
-func (r *limitRepository) DeleteLimit(limit *limit.Limit) error {
+func (r *limitRepository) DeleteLimit(limit *domainlimit.Limit) error {
 	result := r.db.Delete(&limit)
 	if result.Error != nil {
 		return result.Error
@@ -66,8 +66,8 @@ func (r *limitRepository) DeleteLimit(limit *limit.Limit) error {
 	return nil
 }
 
-func (r *limitRepository) FindByCustomerID(customerID uint) (*limit.Limit, error) {
-	var limit limit.Limit
+func (r *limitRepository) FindByCustomerID(customerID uint) (*domainlimit.Limit, error) {
+	var limit domainlimit.Limit
 	err := r.db.Where("customer_id = ?", customerID).First(&limit).Error
 	if err != nil {
 		return nil, err

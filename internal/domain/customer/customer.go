@@ -1,6 +1,7 @@
-package customer
+package domaincustomer
 
 import (
+	"html"
 	"time"
 
 	"gorm.io/gorm"
@@ -19,4 +20,10 @@ type Customer struct {
 	Salary       float64        `gorm:"column:salary" json:"salary"`
 	KTPPhoto     string         `gorm:"column:ktp_photo" json:"ktp_photo"`
 	SelfiePhoto  string         `gorm:"column:selfie_photo" json:"selfie_photo"`
+}
+
+// SanitizeCustomer sanitizes the customer data by escaping HTML entities
+func SanitizeCustomer(cust *Customer) {
+	cust.FullName = html.EscapeString(cust.FullName)
+	cust.LegalName = html.EscapeString(cust.LegalName)
 }

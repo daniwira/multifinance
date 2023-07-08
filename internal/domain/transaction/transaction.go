@@ -1,5 +1,4 @@
-// internal/domain/transaction/transaction.go
-package transaction
+package domaintransaction
 
 import (
 	"time"
@@ -20,5 +19,3 @@ type Transaction struct {
 	Interest     float64        `gorm:"column:interest" json:"interest"`
 	AssetName    string         `gorm:"column:asset_name" json:"asset_name"`
 }
-
-// ... Definisi struktur data lainnya ...

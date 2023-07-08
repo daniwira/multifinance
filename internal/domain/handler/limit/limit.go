@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/daniwira/multifinance/internal/domain/limit"
+	domainlimit "github.com/daniwira/multifinance/internal/domain/limit"
 	"github.com/daniwira/multifinance/internal/service"
 	"github.com/gin-gonic/gin"
 )
@@ -42,7 +42,7 @@ func (h *LimitHandler) GetLimit(c *gin.Context) {
 }
 
 func (h *LimitHandler) CreateLimit(c *gin.Context) {
-	var limit limit.Limit
+	var limit domainlimit.Limit
 	err := c.BindJSON(&limit)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -61,7 +61,7 @@ func (h *LimitHandler) CreateLimit(c *gin.Context) {
 func (h *LimitHandler) UpdateLimit(c *gin.Context) {
 	id := c.Param("id")
 
-	var updatedLimit limit.Limit
+	var updatedLimit domainlimit.Limit
 	err := c.BindJSON(&updatedLimit)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

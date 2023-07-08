@@ -1,5 +1,4 @@
-// internal/domain/limit/limit.go
-package limit
+package domainlimit
 
 import (
 	"fmt"

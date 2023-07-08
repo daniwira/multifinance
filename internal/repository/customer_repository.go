@@ -1,16 +1,16 @@
 package repository
 
 import (
-	"github.com/daniwira/multifinance/internal/domain/customer"
+	domaincustomer "github.com/daniwira/multifinance/internal/domain/customer"
 	"gorm.io/gorm"
 )
 
 type CustomerRepository interface {
-	GetCustomers() ([]customer.Customer, error)
-	GetCustomer(id string) (*customer.Customer, error)
-	CreateCustomer(customer customer.Customer) (*customer.Customer, error)
-	UpdateCustomer(customer *customer.Customer) (*customer.Customer, error)
-	DeleteCustomer(customer *customer.Customer) error
+	GetCustomers() ([]domaincustomer.Customer, error)
+	GetCustomer(id string) (*domaincustomer.Customer, error)
+	CreateCustomer(customer domaincustomer.Customer) (*domaincustomer.Customer, error)
+	UpdateCustomer(customer *domaincustomer.Customer) (*domaincustomer.Customer, error)
+	DeleteCustomer(customer *domaincustomer.Customer) error
 }
 
 type customerRepository struct {
@@ -23,8 +23,8 @@ func NewCustomerRepository(db *gorm.DB) CustomerRepository {
 	}
 }
 
-func (r *customerRepository) GetCustomers() ([]customer.Customer, error) {
-	var customers []customer.Customer
+func (r *customerRepository) GetCustomers() ([]domaincustomer.Customer, error) {
+	var customers []domaincustomer.Customer
 	result := r.db.Find(&customers)
 	if result.Error != nil {
 		return nil, result.Error
@@ -32,16 +32,16 @@ func (r *customerRepository) GetCustomers() ([]customer.Customer, error) {
 	return customers, nil
 }
 
-func (r *customerRepository) GetCustomer(id string) (*customer.Customer, error) {
-	var customer customer.Customer
-	result := r.db.Debug().First(&customer, "id = ?", id)
+func (r *customerRepository) GetCustomer(id string) (*domaincustomer.Customer, error) {
+	var customer domaincustomer.Customer
+	result := r.db.Debug().First(&customer, id)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 	return &customer, nil
 }
 
-func (r *customerRepository) CreateCustomer(customer customer.Customer) (*customer.Customer, error) {
+func (r *customerRepository) CreateCustomer(customer domaincustomer.Customer) (*domaincustomer.Customer, error) {
 	result := r.db.Create(&customer)
 	if result.Error != nil {
 		return nil, result.Error
@@ -49,7 +49,7 @@ func (r *customerRepository) CreateCustomer(customer customer.Customer) (*custom
 	return &customer, nil
 }
 
-func (r *customerRepository) UpdateCustomer(customer *customer.Customer) (*customer.Customer, error) {
+func (r *customerRepository) UpdateCustomer(customer *domaincustomer.Customer) (*domaincustomer.Customer, error) {
 	result := r.db.Debug().Save(&customer)
 	if result.Error != nil {
 		return nil, result.Error
@@ -57,7 +57,7 @@ func (r *customerRepository) UpdateCustomer(customer *customer.Customer) (*custo
 	return customer, nil
 }
 
-func (r *customerRepository) DeleteCustomer(customer *customer.Customer) error {
+func (r *customerRepository) DeleteCustomer(customer *domaincustomer.Customer) error {
 	result := r.db.Delete(&customer)
 	if result.Error != nil {
 		return result.Error

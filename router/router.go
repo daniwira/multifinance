@@ -70,7 +70,10 @@ func SetupRouter() (*gin.Engine, error) {
 		v1.PUT("/transactions/:id", transactionHandler.UpdateTransaction)
 		v1.DELETE("/transactions/:id", transactionHandler.DeleteTransaction)
 
+		// Loan
 		v1.POST("/loan", loanHandler.CreateLoan)
+
+		// PaymentInstallment
 		v1.POST("/loan/payment", loanHandler.PaymentInstallment)
 	}
 
