@@ -20,11 +20,5 @@ func InitializeDatabase(dsn string) (*gorm.DB, error) {
 	// 	return nil, err
 	// }
 
-	// // Add unique index with length 16 for 'nik' column
-	// err = db.Exec("CREATE UNIQUE INDEX idx_customers_nik ON customers (nik(16))").Error
-	// if err != nil {
-	// 	return nil, err
-	// }
-
 	return db, nil
 }
